@@ -8,21 +8,13 @@ class BooksController < ApplicationController
     @book = Book.find(params[:id])
   end
 
-  # def create
-  # book = Book.new(book_params)
-  # if book.save
-  # redirect_to  book_path(book)
-  # else
-  # @books = Books.all
-  # flash.now[:alert] = "can't be blank error"
-  # render "index"
-  # end
   def create
     @book = Book.new(book_params)
     if @book.save
       redirect_to @book, notice: 'Book was successfully created.'
     else
       @books=Book.all
+      flash[:alert] = 'error'
       render action: :index
     end
   end
@@ -44,6 +36,7 @@ class BooksController < ApplicationController
     if @book.update(book_params)
       redirect_to @book, notice: 'Book was successfully updated.'
     else
+      flash[:alert] = 'error'
       render :edit, notice: 'update was failed'
     end
   end
